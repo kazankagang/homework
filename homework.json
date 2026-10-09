@@ -26,7 +26,12 @@
           "title": "Тест 3",
           "url": "https://campus.fa.ru/mod/quiz/view.php?id=1119861"
         }
-      ]
+      ],
+      "fr": {
+        "subject": "Mathématiques",
+        "title": "Trois tests sur le cours en ligne",
+        "description": "Faire les trois tests pour les séminaires des 6, 7 et 8 octobre. Plusieurs tentatives sont possibles ; recopier la meilleure tentative dans le cahier."
+      }
     },
     {
       "subject": "Алгоритмы и структуры данных",
@@ -36,7 +41,12 @@
       "deadline": "2026-10-15",
       "images": [
         "images/asd-dz-1.jpg"
-      ]
+      ],
+      "fr": {
+        "subject": "Algorithmes et structures de données",
+        "title": "Exercices pratiques : matrice et liste des résultats de session",
+        "description": "Exercice 1. Créer une matrice d'entiers de -10 à 10 et l'afficher à l'écran. Pour cette matrice : calculer le nombre de lignes contenant des zéros ; vérifier s'il y a des lignes identiques ; calculer la matrice transposée ; supprimer la ligne et la colonne dont les numéros sont saisis ; insérer une ligne et une colonne aux numéros saisis, remplies de zéros.\nExercice 2. Le résultat de la session (3 examens : Histoire, Algèbre, Informatique) d'un étudiant est donné sous forme de liste avec le nom de famille et trois notes. Le texte complet figure sur la photo ci-dessous."
+      }
     },
     {
       "subject": "Дискретная математика",
@@ -50,25 +60,48 @@
           "title": "ДЗ_3.pdf",
           "url": "dz3.pdf"
         }
-      ]
+      ],
+      "fr": {
+        "subject": "Mathématiques discrètes",
+        "title": "Devoir n°3. Relations d'équivalence et d'ordre",
+        "description": "Exercice 1. Étude d'une relation d'équivalence : démontrer que la relation donnée est une relation d'équivalence, trouver les classes d'équivalence, l'ensemble quotient et son indice.\nExercice 2. Étude d'un ordre partiel : vérifier la réflexivité, l'antisymétrie et la transitivité, déterminer si l'ordre est total, construire le diagramme de Hasse, trouver les éléments minimal, maximal, plus petit et plus grand, ainsi que les paires incomparables.\nLes variantes sont individuelles ; le texte complet et des exemples se trouvent dans le fichier ДЗ_3.pdf (11 pages, S. D. Danilova)."
+      }
     },
     {
       "subject": "Английский язык",
       "title": "Unit 2.1, упражнения 1 и 4",
       "description": "Объединить оба упражнения и составить короткий текст об истории и работе интернета.",
-      "assigned": "2026-10-09"
+      "assigned": "2026-10-09",
+      "fr": {
+        "subject": "Anglais",
+        "title": "Unit 2.1, exercices 1 et 4",
+        "description": "Combiner les deux exercices et rédiger un court texte sur l'histoire et le fonctionnement d'Internet."
+      }
     },
     {
       "subject": "Экономика",
       "title": "Семинар: тема 3. Собственность как системообразующий фактор",
       "description": "Подготовиться к обсуждению: экономическое и правовое содержание собственности, формы собственности и хозяйствования, государственная и частная формы, концепции неоинституциональной теории прав собственности, реформирование отношений собственности и приватизация в России, экономический интерес, мотивы и стимулы, роль государства.",
-      "assigned": "2026-10-06"
+      "assigned": "2026-10-06",
+      "fr": {
+        "subject": "Économie",
+        "title": "Séminaire : thème 3. La propriété comme facteur structurant du système",
+        "description": "Se préparer à la discussion : contenu économique et juridique de la propriété, formes de propriété et de gestion, formes étatique et privée, théories néo-institutionnelles des droits de propriété, réforme des rapports de propriété et privatisation en Russie, intérêt économique, motivations et incitations, rôle de l'État."
+      }
     },
     {
       "subject": "Введение в специальность",
       "title": "Эссе",
       "description": "Подготовить эссе по итогам консультации. Титульный лист эссе и запись консультации — во вложении письма.",
-      "assigned": "2026-09-28"
+      "assigned": "2026-09-28",
+      "fr": {
+        "subject": "Introduction à la spécialité",
+        "title": "Essai",
+        "description": "Rédiger un essai à l'issue de la consultation. La page de titre de l'essai et l'enregistrement de la consultation sont en pièce jointe du courriel."
+      }
     }
-  ]
+  ],
+  "fr": {
+    "description": "Devoirs, échéances et supports à jour"
+  }
 }
