@@ -6,13 +6,38 @@
     title: $("title"), subtitle: $("subtitle"), updated: $("updated"),
   };
   let items = [];
+  let data = null;
+  let lang = "ru";
+  try { lang = localStorage.getItem("lang") === "fr" ? "fr" : "ru"; } catch (e) {}
+
+  const I18N = {
+    ru: {
+      locale: "ru-RU", title: "Домашние задания", search: "Поиск по заданиям…", allSubjects: "Все предметы",
+      active: "Актуальные", overdue: "Просроченные", all: "Все", none: "Без срока", overdueBadge: "Просрочено",
+      today: "Сегодня", tomorrow: "Завтра", left: "Осталось ", days: ["день", "дня", "дней"],
+      due: "Срок сдачи: ", until: ", до ", noDue: "Срок не указан", assigned: "Задано: ", found: "Найдено: ",
+      tasks: ["задание", "задания", "заданий"], empty: "Ничего не найдено.", photo: "Фото задания: ",
+      updated: "Обновлено: ", btn: "Français", filters: "Фильтры", subjectLbl: "Предмет", statusLbl: "Статус",
+    },
+    fr: {
+      locale: "fr-FR", title: "Devoirs", search: "Rechercher un devoir…", allSubjects: "Toutes les matières",
+      active: "À rendre", overdue: "En retard", all: "Tous", none: "Sans échéance", overdueBadge: "En retard",
+      today: "Aujourd'hui", tomorrow: "Demain", left: "Reste ", days: ["jour", "jours", "jours"],
+      due: "À rendre le : ", until: ", avant ", noDue: "Échéance non précisée", assigned: "Donné le : ", found: "Trouvé : ",
+      tasks: ["devoir", "devoirs", "devoirs"], empty: "Aucun résultat.", photo: "Photo du devoir : ",
+      updated: "Mis à jour : ", btn: "Русский", filters: "Filtres", subjectLbl: "Matière", statusLbl: "Statut",
+    },
+  };
+  const T = () => I18N[lang];
+  const tr = (a, k) => (lang === "fr" && a.fr && a.fr[k]) || a[k];
 
   const MS_DAY = 86400000;
   const today = () => { const d = new Date(); d.setHours(0, 0, 0, 0); return d; };
   const parseDate = (s) => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
-  const fmt = (d) => d.toLocaleDateString("ru-RU", { day: "numeric", month: "long", year: "numeric" });
+  const fmt = (d) => d.toLocaleDateString(T().locale, { day: "numeric", month: "long", year: "numeric" });
 
   function plural(n, a, b, c) {
+    if (lang === "fr") return n < 2 ? a : b;
     const m10 = n % 10, m100 = n % 100;
     if (m10 === 1 && m100 !== 11) return a;
     if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return b;
@@ -20,12 +45,12 @@
   }
 
   function deadlineInfo(deadline) {
-    if (!deadline) return { cls: "none", text: "Без срока" };
+    if (!deadline) return { cls: "none", text: T().none };
     const diff = Math.round((deadline - today()) / MS_DAY);
-    if (diff < 0) return { cls: "overdue", text: "Просрочено" };
-    if (diff === 0) return { cls: "soon", text: "Сегодня" };
-    if (diff === 1) return { cls: "soon", text: "Завтра" };
-    const text = "Осталось " + diff + " " + plural(diff, "день", "дня", "дней");
+    if (diff < 0) return { cls: "overdue", text: T().overdueBadge };
+    if (diff === 0) return { cls: "soon", text: T().today };
+    if (diff === 1) return { cls: "soon", text: T().tomorrow };
+    const text = T().left + diff + " " + plural(diff, ...T().days);
     return { cls: diff <= 3 ? "soon" : "far", text };
   }
 
@@ -48,7 +73,7 @@
         const over = !!a._deadline && a._deadline < t;
         return st === "all" || (st === "active" ? !over : over);
       })
-      .filter((a) => !q || (a.title + " " + a.subject + " " + (a.description || "")).toLowerCase().includes(q))
+      .filter((a) => !q || (tr(a, "title") + " " + tr(a, "subject") + " " + (tr(a, "description") || "")).toLowerCase().includes(q))
       .sort((a, b) => {
         if (!a._deadline && !b._deadline) return 0;
         if (!a._deadline) return 1;
@@ -62,10 +87,10 @@
       const card = el("article", "card " + info.cls);
 
       const top = el("div", "row");
-      top.append(el("span", "subject", a.subject), el("span", "badge " + info.cls, info.text));
+      top.append(el("span", "subject", tr(a, "subject")), el("span", "badge " + info.cls, info.text));
 
-      card.append(top, el("h2", null, a.title));
-      if (a.description) card.append(el("p", "desc", a.description));
+      card.append(top, el("h2", null, tr(a, "title")));
+      if (tr(a, "description")) card.append(el("p", "desc", tr(a, "description")));
       if (a.images && a.images.length) {
         const gal = el("div", "gallery");
         a.images.forEach((src) => {
@@ -75,7 +100,7 @@
           link.rel = "noopener noreferrer";
           const img = document.createElement("img");
           img.src = src;
-          img.alt = "Фото задания: " + a.title;
+          img.alt = T().photo + tr(a, "title");
           img.loading = "lazy";
           link.append(img);
           gal.append(link);
@@ -83,7 +108,7 @@
         card.append(gal);
       }
       card.append(el("div", "meta",
-        (a._deadline ? "Срок сдачи: " + fmt(a._deadline) + (a.time ? ", до " + a.time : "") : "Срок не указан") + (a.assigned ? " · " : "") + (a.assigned ? "Задано: " + fmt(parseDate(a.assigned)) : "")));
+        (a._deadline ? T().due + fmt(a._deadline) + (a.time ? T().until + a.time : "") : T().noDue) + (a.assigned ? " · " : "") + (a.assigned ? T().assigned + fmt(parseDate(a.assigned)) : "")));
 
       if (a.links && a.links.length) {
         const box = el("div", "links");
@@ -101,27 +126,59 @@
 
     els.empty.hidden = shown.length > 0;
     els.count.textContent = shown.length
-      ? "Найдено: " + shown.length + " " + plural(shown.length, "задание", "задания", "заданий")
+      ? T().found + shown.length + " " + plural(shown.length, ...T().tasks)
       : "";
   }
 
-  function init(data) {
-    if (data.group) {
-      els.title.textContent = "Домашние задания — " + data.group;
-      document.title = "Домашние задания — " + data.group;
-    }
-    if (data.description) els.subtitle.textContent = data.description;
-    if (data.updated) els.updated.textContent = fmt(parseDate(data.updated));
+  const langBtn = el("button", "lang-btn");
+  langBtn.type = "button";
+  langBtn.addEventListener("click", () => {
+    lang = lang === "ru" ? "fr" : "ru";
+    try { localStorage.setItem("lang", lang); } catch (e) {}
+    applyLang();
+  });
+  document.querySelector(".top .wrap").append(langBtn);
 
-    items = (data.assignments || []).map((a) => Object.assign({}, a, { _deadline: a.deadline ? parseDate(a.deadline) : null }));
+  function applyLang() {
+    const t = T();
+    document.documentElement.lang = lang;
+    langBtn.textContent = t.btn;
+    const g = data && data.group ? " — " + data.group : "";
+    els.title.textContent = t.title + g;
+    document.title = t.title + g;
+    els.subtitle.textContent = data ? ((lang === "fr" && data.fr && data.fr.description) || data.description || "") : "";
+    els.search.placeholder = t.search;
+    els.search.setAttribute("aria-label", t.search);
+    els.subject.setAttribute("aria-label", t.subjectLbl);
+    els.status.setAttribute("aria-label", t.statusLbl);
+    document.querySelector(".controls").setAttribute("aria-label", t.filters);
+    const so = els.status.options;
+    so[0].textContent = t.active; so[1].textContent = t.overdue; so[2].textContent = t.all;
+    els.empty.textContent = t.empty;
+    const foot = document.querySelector(".foot");
+    foot.firstChild.textContent = t.updated;
+    if (data && data.updated) els.updated.textContent = fmt(parseDate(data.updated));
 
-    [...new Set(items.map((a) => a.subject))].sort((a, b) => a.localeCompare(b, "ru")).forEach((s) => {
-      const o = el("option", null, s);
-      o.value = s;
+    const cur = els.subject.value;
+    els.subject.replaceChildren();
+    const all = el("option", null, t.allSubjects);
+    all.value = "";
+    els.subject.append(all);
+    const seen = new Map();
+    items.forEach((a) => { if (!seen.has(a.subject)) seen.set(a.subject, tr(a, "subject")); });
+    [...seen.entries()].sort((a, b) => a[1].localeCompare(b[1], lang)).forEach(([k, v]) => {
+      const o = el("option", null, v);
+      o.value = k;
       els.subject.append(o);
     });
-
+    els.subject.value = cur;
     render();
+  }
+
+  function init(d) {
+    data = d;
+    items = (d.assignments || []).map((a) => Object.assign({}, a, { _deadline: a.deadline ? parseDate(a.deadline) : null }));
+    applyLang();
   }
 
   [els.search, els.subject, els.status].forEach((e) => e.addEventListener("input", render));
