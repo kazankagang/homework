@@ -108,7 +108,7 @@
         card.append(gal);
       }
       card.append(el("div", "meta",
-        (a._deadline ? T().due + fmt(a._deadline) + (a.time ? T().until + a.time : "") : T().noDue) + (a.assigned ? " · " : "") + (a.assigned ? T().assigned + fmt(parseDate(a.assigned)) : "")));
+        (a._deadline ? T().due + fmt(a._deadline) + (a.time ? T().until + a.time : "") + (tr(a, "note") ? " (" + tr(a, "note") + ")" : "") : T().noDue) + (a.assigned ? " · " : "") + (a.assigned ? T().assigned + fmt(parseDate(a.assigned)) : "")));
 
       if (a.links && a.links.length) {
         const box = el("div", "links");
