@@ -97,14 +97,17 @@
       "fr": {
         "subject": "Introduction à la spécialité",
         "title": "Essai",
-        "description": "Rédiger un essai à l'issue de la consultation. La page de titre de l'essai (fichier ci-dessous) et l'enregistrement de la consultation sont en pièce jointe du courriel."
+        "description": "Rédiger un essai à l'issue de la consultation. La page de titre de l'essai (fichier ci-dessous) et l'enregistrement de la consultation sont en pièce jointe du courriel.",
+        "note": "date approximative"
       },
       "links": [
         {
           "title": "Титул эссе (.docx)",
           "url": "%D0%A2%D0%B8%D1%82%D1%83%D0%BB%20%D1%8D%D1%81%D1%81%D0%B5.docx"
         }
-      ]
+      ],
+      "deadline": "2026-10-31",
+      "note": "неточно"
     }
   ],
   "fr": {
