@@ -20,6 +20,7 @@
   }
 
   function deadlineInfo(deadline) {
+    if (!deadline) return { cls: "none", text: "Без срока" };
     const diff = Math.round((deadline - today()) / MS_DAY);
     if (diff < 0) return { cls: "overdue", text: "Просрочено" };
     if (diff === 0) return { cls: "soon", text: "Сегодня" };
@@ -44,11 +45,16 @@
     const shown = items
       .filter((a) => !subj || a.subject === subj)
       .filter((a) => {
-        const over = a._deadline < t;
+        const over = !!a._deadline && a._deadline < t;
         return st === "all" || (st === "active" ? !over : over);
       })
       .filter((a) => !q || (a.title + " " + a.subject + " " + (a.description || "")).toLowerCase().includes(q))
-      .sort((a, b) => st === "overdue" ? b._deadline - a._deadline : a._deadline - b._deadline);
+      .sort((a, b) => {
+        if (!a._deadline && !b._deadline) return 0;
+        if (!a._deadline) return 1;
+        if (!b._deadline) return -1;
+        return st === "overdue" ? b._deadline - a._deadline : a._deadline - b._deadline;
+      });
 
     els.list.replaceChildren();
     shown.forEach((a) => {
@@ -61,7 +67,7 @@
       card.append(top, el("h2", null, a.title));
       if (a.description) card.append(el("p", "desc", a.description));
       card.append(el("div", "meta",
-        "Срок сдачи: " + fmt(a._deadline) + (a.assigned ? " · Задано: " + fmt(parseDate(a.assigned)) : "")));
+        (a._deadline ? "Срок сдачи: " + fmt(a._deadline) : "Срок не указан") + (a.assigned ? " · " : "") + (a.assigned ? "Задано: " + fmt(parseDate(a.assigned)) : "")));
 
       if (a.links && a.links.length) {
         const box = el("div", "links");
@@ -91,7 +97,7 @@
     if (data.description) els.subtitle.textContent = data.description;
     if (data.updated) els.updated.textContent = fmt(parseDate(data.updated));
 
-    items = (data.assignments || []).map((a) => Object.assign({}, a, { _deadline: parseDate(a.deadline) }));
+    items = (data.assignments || []).map((a) => Object.assign({}, a, { _deadline: a.deadline ? parseDate(a.deadline) : null }));
 
     [...new Set(items.map((a) => a.subject))].sort((a, b) => a.localeCompare(b, "ru")).forEach((s) => {
       const o = el("option", null, s);
