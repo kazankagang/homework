@@ -1,0 +1,66 @@
+:root {
+  --bg: #f5f6f8;
+  --card: #ffffff;
+  --text: #1c2030;
+  --muted: #6b7280;
+  --border: #e3e6ec;
+  --accent: #3b5bdb;
+  --ok: #2f9e44;
+  --warn: #e8590c;
+  --bad: #e03131;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14161c;
+    --card: #1d2029;
+    --text: #e8eaf0;
+    --muted: #9aa1b2;
+    --border: #2d313d;
+    --accent: #748ffc;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+.wrap { max-width: 860px; margin: 0 auto; padding: 0 16px; }
+.top { background: var(--card); border-bottom: 1px solid var(--border); padding: 28px 0 20px; margin-bottom: 20px; }
+h1 { margin: 0 0 4px; font-size: 1.7rem; }
+.muted { color: var(--muted); margin: 0; }
+.foot { padding: 28px 16px; font-size: .85rem; }
+
+.controls { display: grid; grid-template-columns: 1fr auto auto; gap: 10px; margin-bottom: 12px; }
+.controls input, .controls select {
+  padding: 10px 12px; font: inherit; color: var(--text);
+  background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+}
+@media (max-width: 600px) { .controls { grid-template-columns: 1fr; } }
+
+.list { display: grid; gap: 12px; margin-top: 10px; }
+.card {
+  background: var(--card); border: 1px solid var(--border);
+  border-left: 4px solid var(--accent); border-radius: 10px; padding: 14px 16px;
+}
+.card.soon { border-left-color: var(--warn); }
+.card.overdue { border-left-color: var(--bad); opacity: .85; }
+.card.far { border-left-color: var(--ok); }
+.row { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; align-items: baseline; }
+.subject { font-size: .8rem; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--accent); }
+.card h2 { margin: 2px 0 6px; font-size: 1.15rem; }
+.desc { margin: 0 0 8px; white-space: pre-wrap; }
+.meta { font-size: .88rem; color: var(--muted); }
+.badge { font-size: .8rem; font-weight: 600; padding: 2px 9px; border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; }
+.badge.soon { color: var(--warn); }
+.badge.overdue { color: var(--bad); }
+.badge.far { color: var(--ok); }
+.links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.links a {
+  font-size: .88rem; color: var(--accent); text-decoration: none;
+  border: 1px solid var(--border); padding: 3px 10px; border-radius: 6px;
+}
+.links a:hover { border-color: var(--accent); }
+.empty, .error { text-align: center; padding: 30px 0; }
+.error { color: var(--bad); }

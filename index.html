@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Домашние задания</title>
+  <meta name="description" content="Домашние задания группы">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <h1 id="title">Домашние задания</h1>
+      <p id="subtitle" class="muted"></p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="controls" aria-label="Фильтры">
+      <input id="search" type="search" placeholder="Поиск по заданиям…" aria-label="Поиск">
+      <select id="subject" aria-label="Предмет">
+        <option value="">Все предметы</option>
+      </select>
+      <select id="status" aria-label="Статус">
+        <option value="active">Актуальные</option>
+        <option value="overdue">Просроченные</option>
+        <option value="all">Все</option>
+      </select>
+    </section>
+
+    <p id="count" class="muted"></p>
+    <section id="list" class="list" aria-live="polite"></section>
+    <p id="empty" class="empty" hidden>Ничего не найдено.</p>
+    <p id="error" class="error" hidden></p>
+  </main>
+
+  <footer class="wrap muted foot">
+    Обновлено: <span id="updated">—</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
