@@ -92,13 +92,19 @@
     {
       "subject": "Введение в специальность",
       "title": "Эссе",
-      "description": "Подготовить эссе по итогам консультации. Титульный лист эссе и запись консультации — во вложении письма.",
+      "description": "Подготовить эссе по итогам консультации. Титульный лист эссе (файл ниже) и запись консультации — во вложении письма.",
       "assigned": "2026-09-28",
       "fr": {
         "subject": "Introduction à la spécialité",
         "title": "Essai",
-        "description": "Rédiger un essai à l'issue de la consultation. La page de titre de l'essai et l'enregistrement de la consultation sont en pièce jointe du courriel."
-      }
+        "description": "Rédiger un essai à l'issue de la consultation. La page de titre de l'essai (fichier ci-dessous) et l'enregistrement de la consultation sont en pièce jointe du courriel."
+      },
+      "links": [
+        {
+          "title": "Титул эссе (.docx)",
+          "url": "%D0%A2%D0%B8%D1%82%D1%83%D0%BB%20%D1%8D%D1%81%D1%81%D0%B5.docx"
+        }
+      ]
     }
   ],
   "fr": {
