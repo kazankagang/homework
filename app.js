@@ -66,8 +66,24 @@
 
       card.append(top, el("h2", null, a.title));
       if (a.description) card.append(el("p", "desc", a.description));
+      if (a.images && a.images.length) {
+        const gal = el("div", "gallery");
+        a.images.forEach((src) => {
+          const link = el("a");
+          link.href = src;
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+          const img = document.createElement("img");
+          img.src = src;
+          img.alt = "Фото задания: " + a.title;
+          img.loading = "lazy";
+          link.append(img);
+          gal.append(link);
+        });
+        card.append(gal);
+      }
       card.append(el("div", "meta",
-        (a._deadline ? "Срок сдачи: " + fmt(a._deadline) : "Срок не указан") + (a.assigned ? " · " : "") + (a.assigned ? "Задано: " + fmt(parseDate(a.assigned)) : "")));
+        (a._deadline ? "Срок сдачи: " + fmt(a._deadline) + (a.time ? ", до " + a.time : "") : "Срок не указан") + (a.assigned ? " · " : "") + (a.assigned ? "Задано: " + fmt(parseDate(a.assigned)) : "")));
 
       if (a.links && a.links.length) {
         const box = el("div", "links");
